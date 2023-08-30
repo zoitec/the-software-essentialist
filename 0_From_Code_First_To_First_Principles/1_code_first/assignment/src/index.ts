@@ -1,37 +1,60 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import { createConnection, Connection } from 'typeorm';
+import * as express from 'express'
+import { Request, Response } from 'express'
+// import { createConnection, Connection } from 'typeorm';
+import 'reflect-metadata';
 import { User } from './entities/User'; // Import your User entity class
+import { myDataSource } from './app-data-source';
+const port = 3000
+// establish database connection
+myDataSource
+  .initialize()
+  .then(() => {
+    console.log("Data Source has been initialized!")
+  })
+  .catch((err) => {
+    console.error("Error during Data Source initialization:", err)
+  })
 
-// Create an Express app
-const app = express();
-const port = 3000; // Change this to the desired port
 
-// Parse JSON requests
-app.use(bodyParser.json());
+// create and setup express app
+const app = express()
+app.use(express.json())
 
-// Define a route to handle POST requests
-app.post('/createUser', async (req, res) => {
-  try {
-    const { username, email } = req.body;
+// register routes
+app.get("/users", async function (req: Request, res: Response) {
+  const users = await myDataSource.getRepository(User).find()
+  res.json(users)
+})
 
-    // Create a connection to the database
-    const connection: Connection = await createConnection();
+app.get("/users/:id", async function (req: Request, res: Response) {
+  const results = await myDataSource.getRepository(User).findOneBy({
+    id: Number(req.params.id),
+  })
+  return res.send(results)
+})
 
-    // Create a new User entity
-    const user = new User();
-    user.username = username;
-    user.email = email;
+app.post("/users", async function (req: Request, res: Response) {
+  const user = await myDataSource.getRepository(User).create(req.body)
+  const results = await myDataSource.getRepository(User).save(user)
+  return res.send(results)
+})
 
-    // Save the user to the database
-    await connection.manager.save(user);
+app.put("/users/:id", async function (req: Request, res: Response) {
+  const user = await myDataSource.getRepository(User).findOneBy({
+    id: Number(req.params.id),
+  })
+  myDataSource.getRepository(User).merge(user, req.body)
+  const results = await myDataSource.getRepository(User).save(user)
+  return res.send(results)
+})
 
-    res.json(user);
-  } catch (error) {
-    console.error('Error creating user:', error);
-    res.status(500).json({ error: 'An error occurred while creating user.' });
-  }
-});
+app.delete("/users/:id", async function (req: Request, res: Response) {
+  const results = await myDataSource.getRepository(User).delete(req.params.id)
+  return res.send(results)
+})
+
+// start express server
+//app.listen(3000)
 
 // Start the server
 app.listen(port, () => {

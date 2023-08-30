@@ -10,4 +10,7 @@ export class User {
 
   @Column({ length: 255 }) // Adjust the length as needed
   email: string;
+
+  @Column({ length: 255 }) // Adjust the length as needed
+  password: string;
 }
