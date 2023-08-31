@@ -39,7 +39,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 // import { createConnection, Connection } from 'typeorm';
 require("reflect-metadata");
-var User_1 = require("./entities/User"); // Import your User entity class
+var User_js_1 = require("./entity/User.js"); // Import your User entity class
 var app_data_source_1 = require("./app-data-source");
 var port = 3000;
 // establish database connection
@@ -60,7 +60,7 @@ app.get("/users", function (req, res) {
         var users;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, app_data_source_1.myDataSource.getRepository(User_1.User).find()];
+                case 0: return [4 /*yield*/, app_data_source_1.myDataSource.getRepository(User_js_1.User).find()];
                 case 1:
                     users = _a.sent();
                     res.json(users);
@@ -74,7 +74,7 @@ app.get("/users/:id", function (req, res) {
         var results;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, app_data_source_1.myDataSource.getRepository(User_1.User).findOneBy({
+                case 0: return [4 /*yield*/, app_data_source_1.myDataSource.getRepository(User_js_1.User).findOneBy({
                         id: Number(req.params.id),
                     })];
                 case 1:
@@ -89,10 +89,10 @@ app.post("/users", function (req, res) {
         var user, results;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, app_data_source_1.myDataSource.getRepository(User_1.User).create(req.body)];
+                case 0: return [4 /*yield*/, app_data_source_1.myDataSource.getRepository(User_js_1.User).create(req.body)];
                 case 1:
                     user = _a.sent();
-                    return [4 /*yield*/, app_data_source_1.myDataSource.getRepository(User_1.User).save(user)];
+                    return [4 /*yield*/, app_data_source_1.myDataSource.getRepository(User_js_1.User).save(user)];
                 case 2:
                     results = _a.sent();
                     return [2 /*return*/, res.send(results)];
@@ -105,13 +105,13 @@ app.put("/users/:id", function (req, res) {
         var user, results;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, app_data_source_1.myDataSource.getRepository(User_1.User).findOneBy({
+                case 0: return [4 /*yield*/, app_data_source_1.myDataSource.getRepository(User_js_1.User).findOneBy({
                         id: Number(req.params.id),
                     })];
                 case 1:
                     user = _a.sent();
-                    app_data_source_1.myDataSource.getRepository(User_1.User).merge(user, req.body);
-                    return [4 /*yield*/, app_data_source_1.myDataSource.getRepository(User_1.User).save(user)];
+                    app_data_source_1.myDataSource.getRepository(User_js_1.User).merge(user, req.body);
+                    return [4 /*yield*/, app_data_source_1.myDataSource.getRepository(User_js_1.User).save(user)];
                 case 2:
                     results = _a.sent();
                     return [2 /*return*/, res.send(results)];
@@ -124,7 +124,7 @@ app.delete("/users/:id", function (req, res) {
         var results;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, app_data_source_1.myDataSource.getRepository(User_1.User).delete(req.params.id)];
+                case 0: return [4 /*yield*/, app_data_source_1.myDataSource.getRepository(User_js_1.User).delete(req.params.id)];
                 case 1:
                     results = _a.sent();
                     return [2 /*return*/, res.send(results)];

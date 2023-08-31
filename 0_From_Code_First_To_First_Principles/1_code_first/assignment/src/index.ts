@@ -2,7 +2,7 @@ import * as express from 'express'
 import { Request, Response } from 'express'
 // import { createConnection, Connection } from 'typeorm';
 import 'reflect-metadata';
-import { User } from './entities/User'; // Import your User entity class
+import { User } from './entity/User.js'; // Import your User entity class
 import { myDataSource } from './app-data-source';
 const port = 3000
 // establish database connection
