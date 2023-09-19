@@ -13,4 +13,10 @@ export class User {
 
   @Column({ length: 255 }) // Adjust the length as needed
   password: string;
+
+  @Column({ length: 255, nullable:true }) // Adjust the length as needed
+  firstname: string;
+
+  @Column({ length: 255, nullable:true }) // Adjust the length as needed
+  lastname: string;
 }

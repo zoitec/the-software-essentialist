@@ -33,6 +33,16 @@ var User = /** @class */ (function () {
         ,
         __metadata("design:type", String)
     ], User.prototype, "password", void 0);
+    __decorate([
+        (0, typeorm_1.Column)({ length: 255, nullable: true }) // Adjust the length as needed
+        ,
+        __metadata("design:type", String)
+    ], User.prototype, "firstname", void 0);
+    __decorate([
+        (0, typeorm_1.Column)({ length: 255, nullable: true }) // Adjust the length as needed
+        ,
+        __metadata("design:type", String)
+    ], User.prototype, "lastname", void 0);
     User = __decorate([
         (0, typeorm_1.Entity)('users') // This corresponds to the PostgreSQL table name
     ], User);
